@@ -15,12 +15,12 @@ struct Channel {
 
 
 struct Channel channel[5];    //º¬Îå¸öÍ¨µÀµÄ½á¹¹ÌåÊı×é
-
+int back_cnt = 0;            //³·Ïú²Ù×÷µÄ´ÎÊı
 
 struct Channel init_channel1(struct Channel channel1[]) {            //³õÊ¼»¯Í¨µÀ
 
 	for (int i = 1; i < 6; i++) {
-		printf("ÕâÊÇ%dºÅÍ¨µÀ£¬ÇëÊäÈëËù°Ú·ÅÉÌÆ·µÄÃû³Æ£¨²»ÔÚ´ËÍ¨µÀ°Ú·ÅÇëÊäÈëEND£¬ÈçÏëÒª³·ÏúÉÏ²½°Ú·Å²Ù×÷ÇëÖ±½ÓÊäÈëback£©£º\n", i);
+		printf("ÕâÊÇ%dºÅÍ¨µÀ£¬ÇëÊäÈëËù°Ú·ÅÉÌÆ·µÄÃû³Æ£¨²»ÔÚ´ËÍ¨µÀ°Ú·ÅÇëÊäÈëEND£¬ÈçÏëÒª³·ÏúÉÏ²½°Ú·Å²Ù×÷ÇëÖ±½ÓÊäÈëback,×î¶àÈı´Î£©£º\n", i);
 		scanf_s("%s", &channel[i - 1].name, 10);
 		fflush(stdin);
 
@@ -29,7 +29,15 @@ struct Channel init_channel1(struct Channel channel1[]) {            //³õÊ¼»¯Í¨µ
 			continue;
 		}
 		else if (strcmp(channel[i - 1].name, "back") == 0) {       //ÓÃ»§Ñ¡Ôñ³·Ïú£¨back£©Ê±£¬i-2¶Ôi½øĞĞÖØĞÂÊäÈë
-			i -= 2;
+			if (back_cnt >= 3) {
+				printf("³·Ïú´ÎÊıÒÑ´ïÉÏÏŞ£¡\n");
+				i--;
+			}
+			else {
+
+				i -= 2;
+				back_cnt++;
+			}
 		}
 		else {
 			printf("ÇëÊäÈë°Ú·ÅÉÌÆ·µÄÊıÁ¿ºÍ¼Û¸ñ£¨ÇëÓÃÓÃ¿Õ¸ñ¸ô¿ª£©£º\n");
@@ -83,7 +91,7 @@ void Trade(struct Channel channel[]) {                   //¹ºÂòº¯Êı£¨°üÀ¨ÕÒÁã£©
 
 	int i = 0;
 	while (1) {
-		printf("ÇëÊäÈëÄãÒª¹ºÂòµÄÉÌÆ·Ãû£¬ËùÔÚÍ¨µÀºÍÊıÁ¿£¨ÇëÓÃ¿Õ¸ñ¸ô¿ª£¬½áÊøÑ¡ÔñÇëÖ±½ÓÊäÈëEND ,ÈçÏë³·ÏúÉÏ²½¹ºÂòÇëÖ±½ÓÊäÈëback£©£º\n");
+		printf("ÇëÊäÈëÄãÒª¹ºÂòµÄÉÌÆ·Ãû£¬ËùÔÚÍ¨µÀºÍÊıÁ¿£¨ÇëÓÃ¿Õ¸ñ¸ô¿ª£¬½áÊøÑ¡ÔñÇëÖ±½ÓÊäÈëEND ,ÈçÏë³·ÏúÉÏ²½¹ºÂòÇëÖ±½ÓÊäÈëback£¬×î¶àÈı´Î£©£º\n");
 		scanf_s("%s", goods_name, 10);
 		fflush(stdin);
 
@@ -91,9 +99,18 @@ void Trade(struct Channel channel[]) {                   //¹ºÂòº¯Êı£¨°üÀ¨ÕÒÁã£©
 			break;
 		}
 		else if (strcmp(goods_name, "back") == 0) {
-			count[i - 1] = 0;
-			price[i - 1] = 0;
-			i -= 2;
+			if (back_cnt >= 3) {
+				printf("³·Ïú´ÎÊıÒÑ´ïÉÏÏŞ£¡\n");
+				i--;
+				
+			}
+			else {
+
+				count[i - 1] = 0;
+				price[i - 1] = 0;
+				i -= 2;
+			    back_cnt++;
+			}
 		}	
 		else {
 			scanf_s(" %d %d", &goods_channel, &goods_count);
